@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Bootstrap 4.0 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Jquery -->
+  <script src="js/jquery-3.6.0.min.js"></script>
+
+  <!-- Titulo -->
+  <title>Formulario</title>
+
+  <!-- Script validação CPF -->
+  <script>
+    var mask = '###.###.###-##';
+
+    $(document).ready(function () {
+
+      $("#cpf").keypress(function () {
+        var tamanho = this.value.length;
+        if (event.keyCode < 48 || event.keyCode > 57) {
+          event.returnValue = false;
+        } else if (tamanho >= 14) {
+          event.returnValue = false;
+        } else {
+          var saida = mask.substring(1, 0);
+          var texto = mask.substring(tamanho);
+          if (texto.substring(0, 1) != saida) {
+            this.value += texto.substring(0, 1);
+          }
+        }
+      });
+
+      $("#cpf").blur(function () {
+        cpf = this.value.toString().replace(/\.|\-/g, "");
+        if (cpf.length < 11) {
+          alert('CPF Invalido! Digite o CPF Completo');
+          return;
+        }
+        var soma1 = 0,
+          soma2 = 0,
+          vlr = 11;
+        for (i = 0; i < 9; i++) {
+          soma1 += eval(cpf.charAt(i) * (vlr - 1));
+          soma2 += eval(cpf.charAt(i) * vlr);
+          vlr--;
+        }
+        soma1 = (((soma1 * 10) % 11) == 10 ? 0 : ((soma1 * 10) % 11));
+        soma2 = (((soma2 + (2 * soma1)) * 10) % 11);
+
+        if (((soma1 * 10) + soma2) != eval(cpf.charAt(9) + cpf.charAt(10)))
+          alert('CPF Invalido!');
+        else {
+          alert('CPF Válido')
+        }
+      });
+
+    });
+    function validar() {
+      var senha = form.senha.value;
+      var senhaTmp = form.senhaTmp.value;
+
+      if (senha == "" || senha.length <= 5) {
+        alert("Preencha o campo senha com minímo 6 caracteres");
+        form.senha.focus();
+        return false;
+      }
+      if (senha !== senhaTmp) {
+        alert("As senhas não conferem");
+        form.senhaTmp.focus();
+        return false;
+      }
+    }
+
+  </script>
+</head>
+
+<body class="bg-color">
+  <div class="container-fluid h-100">
+    <div class="row form-cadastro justify-content-center p-4">
+      <div class="col-md-3 align-self-center area-form">
+        <div class="row justify-content-center mb-4">
+          <h1>Formulário</h1>
+        </div>
+
+        <form name="form" action="" method="POST" id="form" onSubmit="alert('Dados enviado com Sucesso.');">
+
+          <div class="input-group mt-2">
+            <input type="text" class="form-control bg-light" placeholder="Nome completo" required>
+          </div>
+          <div class="input-group mt-2">
+            <input type="text" class="form-control bg-light" placeholder="Email" required>
+          </div>
+          <div class="input-group mt-2">
+            <input type="date" class="form-control bg-light" placeholder="00/00/0000" required>
+          </div>
+          <div class="input-group mt-2">
+            <input type="cpf" class="form-control bg-light" placeholder="000.000.000-00" name="cpf" id="cpf"
+              autocomplete="off" maxlength="14" minlength="14" OnKeyPress="formatar('###.###.###-##', this)" required>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Radio1" value="option1" required
+              checked>
+            <label class="form-check-label" for="inlineRadio1">Masculino</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Radio2" value="option2" required>
+            <label class="form-check-label" for="inlineRadio2">Feminino</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Radio3" value="option3" required>
+            <label class="form-check-label" for="inlineRadio3">Outro</label>
+          </div>
+          <div class="input-group mt-2" for="senha">
+            <input type="password" class="form-control" name="senha" id="senha" placeholder="******" required>
+          </div>
+          <div class="input-group mt-2" for="senhaTmp">
+            <input type="password" class="form-control" name="senhaTmp" id="senhaTmp" placeholder="******" required>
+          </div>
+          <div class="row">
+            <br>
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-info btn-block mt-2" onclick="return validar()">CADASTRAR</button>
+            </div>
+            <div class="col-md-6">
+              <button type="reset" class="btn btn-secondary btn-block mt-2">CANCELAR</button>
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
