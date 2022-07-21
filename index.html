@@ -5,80 +5,17 @@
   <meta charset="UTF-8">
 
   <!-- Bootstrap 4.0 -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap.min.css">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style.css">
 
   <!-- Jquery -->
-  <script src="js/jquery-3.6.0.min.js"></script>
+  <script src="jquery-3.6.0.min.js"></script>
 
   <!-- Titulo -->
   <title>Formulario</title>
 
-  <!-- Script validação CPF -->
-  <script>
-    var mask = '###.###.###-##';
-
-    $(document).ready(function () {
-
-      $("#cpf").keypress(function () {
-        var tamanho = this.value.length;
-        if (event.keyCode < 48 || event.keyCode > 57) {
-          event.returnValue = false;
-        } else if (tamanho >= 14) {
-          event.returnValue = false;
-        } else {
-          var saida = mask.substring(1, 0);
-          var texto = mask.substring(tamanho);
-          if (texto.substring(0, 1) != saida) {
-            this.value += texto.substring(0, 1);
-          }
-        }
-      });
-
-      $("#cpf").blur(function () {
-        cpf = this.value.toString().replace(/\.|\-/g, "");
-        if (cpf.length < 11) {
-          alert('CPF Invalido! Digite o CPF Completo');
-          return;
-        }
-        var soma1 = 0,
-          soma2 = 0,
-          vlr = 11;
-        for (i = 0; i < 9; i++) {
-          soma1 += eval(cpf.charAt(i) * (vlr - 1));
-          soma2 += eval(cpf.charAt(i) * vlr);
-          vlr--;
-        }
-        soma1 = (((soma1 * 10) % 11) == 10 ? 0 : ((soma1 * 10) % 11));
-        soma2 = (((soma2 + (2 * soma1)) * 10) % 11);
-
-        if (((soma1 * 10) + soma2) != eval(cpf.charAt(9) + cpf.charAt(10)))
-          alert('CPF Invalido!');
-        else {
-          alert('CPF Válido')
-        }
-      });
-
-    });
-    function validar() {
-      var senha = form.senha.value;
-      var senhaTmp = form.senhaTmp.value;
-
-      if (senha == "" || senha.length <= 5) {
-        alert("Preencha o campo senha com minímo 6 caracteres");
-        form.senha.focus();
-        return false;
-      }
-      if (senha !== senhaTmp) {
-        alert("As senhas não conferem");
-        form.senhaTmp.focus();
-        return false;
-      }
-    }
-
-  </script>
 </head>
 
 <body class="bg-color">
@@ -139,6 +76,69 @@
     </div>
   </div>
 
+    <!-- Script validação CPF -->
+    <script>
+      var mask = '###.###.###-##';
+  
+      $(document).ready(function () {
+  
+        $("#cpf").keypress(function () {
+          var tamanho = this.value.length;
+          if (event.keyCode < 48 || event.keyCode > 57) {
+            event.returnValue = false;
+          } else if (tamanho >= 14) {
+            event.returnValue = false;
+          } else {
+            var saida = mask.substring(1, 0);
+            var texto = mask.substring(tamanho);
+            if (texto.substring(0, 1) != saida) {
+              this.value += texto.substring(0, 1);
+            }
+          }
+        });
+  
+        $("#cpf").blur(function () {
+          cpf = this.value.toString().replace(/\.|\-/g, "");
+          if (cpf.length < 11) {
+            alert('CPF Invalido! Digite o CPF Completo');
+            return;
+          }
+          var soma1 = 0,
+            soma2 = 0,
+            vlr = 11;
+          for (i = 0; i < 9; i++) {
+            soma1 += eval(cpf.charAt(i) * (vlr - 1));
+            soma2 += eval(cpf.charAt(i) * vlr);
+            vlr--;
+          }
+          soma1 = (((soma1 * 10) % 11) == 10 ? 0 : ((soma1 * 10) % 11));
+          soma2 = (((soma2 + (2 * soma1)) * 10) % 11);
+  
+          if (((soma1 * 10) + soma2) != eval(cpf.charAt(9) + cpf.charAt(10)))
+            alert('CPF Invalido!');
+          else {
+            alert('CPF Válido')
+          }
+        });
+  
+      });
+      function validar() {
+        var senha = form.senha.value;
+        var senhaTmp = form.senhaTmp.value;
+  
+        if (senha == "" || senha.length <= 5) {
+          alert("Preencha o campo senha com minímo 6 caracteres");
+          form.senha.focus();
+          return false;
+        }
+        if (senha !== senhaTmp) {
+          alert("As senhas não conferem");
+          form.senhaTmp.focus();
+          return false;
+        }
+      }
+  
+    </script>
 
 </body>
 
